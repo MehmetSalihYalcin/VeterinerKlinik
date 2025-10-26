@@ -1,0 +1,70 @@
+﻿@using Klinik.DTO.MedicineDTOS
+@model ResultMedicineDTO
+@{
+    ViewData["Title"] = "Ilaç Guncelle";
+    Layout = "~/Areas/Yonetici/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="col">
+    <p class="text-white mt-5 mb-5">Hoşgeldin, <b>Levent</b></p>
+</div>
+<div class="row">
+    <div class="col-xl-9 col-lg-10 col-md-12 col-sm-12 mx-auto">
+        <div class="tm-bg-primary-dark tm-block tm-block-h-auto">
+            <div class="row">
+                <div class="col-12">
+                    <h2 class="tm-block-title d-inline-block">İlaç Güncelle</h2>
+                </div>
+            </div>
+            <div class="row tm-edit-product-row">
+                <div class="col-xl-6 col-lg-6 col-md-12">
+                    <form method="post" class="tm-edit-product-form" id="medicineForm">
+                        <input type="hidden" value="@Model.Id" name="Id" />
+                        <div class="form-group mb-3">
+                            <label for="name">
+                                Seri Numarası
+                            </label>
+                            <input id="name" name="SerialNumber" type="text" class="form-control  " value="@Model.SerialNumber" required>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="description">Açıklama</label>
+                            <textarea class="form-control  " name="MedicineDescription" rows="6" required>@Model.MedicineDescription</textarea>
+                        </div>
+                </div>
+                <div class="col-xl-6 col-lg-6 col-md-12 mx-auto mb-4">
+                    <div class="form-group mb-3">
+                        <label for="name">
+                            İlaç Adı
+                        </label>
+                        <input id="name" name="MedicineName" type="text" value="@Model.MedicineName" class="form-control  " required>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group mb-3 col-xs-12 col-sm-6">
+                            <label for="stock">
+                                Stok Adeti
+                            </label>
+                            <input id="stock" name="MedicinePiece" type="number" value="@Model.MedicinePiece" class="form-control  " required>
+                        </div>
+                        <div class="form-group mb-3 col-xs-12 col-sm-6">
+                            <label for="Price">
+                                Fiyat (TL)
+                            </label>
+                            <input id="Price" name="MedicinePrice" type="text" value="@Model.MedicinePrice" class="form-control  " required>
+                        </div>
+                        <div class="form-group mb-3 col-xs-12 col-sm-6">
+                            <label for="expire_date">
+                                Eklenme Tarihi
+                            </label>
+                            <input id="expire_date" name="CreateDate" value="@Model.CreateDate" type="text" class="form-control   hasDatepicker" required data-large-mode="true">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary btn-block text-uppercase">İlacı Güncelle</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

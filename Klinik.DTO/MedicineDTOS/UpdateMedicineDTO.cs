@@ -1,0 +1,18 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Klinik.DTO.MedicineDTOS
+{
+	public class UpdateMedicineDTO
+	{
+		public Guid Id { get; set; } 
+		public string SerialNumber { get; set; } = null!;
+		public string MedicineName { get; set; } = null!;
+		public string MedicineDescription { get; set; } = null!;
+		public decimal MedicinePrice { get; set; }
+		public int MedicinePiece { get; set; }
+	}
+}
