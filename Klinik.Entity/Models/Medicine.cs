@@ -9,6 +9,7 @@ public partial class Medicine:BaseClass
     public string SerialNumber { get; set; } = null!; 
     public string MedicineName { get; set; } = null!; 
     public string MedicineDescription { get; set; } = null!; 
-    public decimal MedicinePrice { get; set; } 
+    public string MedicinePrice { get; set; } 
     public int MedicinePiece { get; set; } 
+    public int MedicineRealStok { get; set; } 
 }

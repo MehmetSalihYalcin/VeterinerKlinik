@@ -46,6 +46,7 @@ namespace Klinik.WebUI.Areas.Yonetici.Controllers
 		public IActionResult IlacEkle(CreateMedicineDTO create)
 		{
 			var value = _mapper.Map<Medicine>(create);
+			value.MedicineRealStok = create.MedicinePiece;
 			_medicineMenager.TCreate(value);
 			return Redirect("/Yonetici/AnaSayfa/Index");
 		}
@@ -73,6 +74,52 @@ namespace Klinik.WebUI.Areas.Yonetici.Controllers
 		{
 			_medicineMenager.TDelete(Id);
 			return Redirect("/Yonetici/AnaSayfa/Index");
+		}
+
+		public IActionResult HaftalikRapor(int page = 1)
+		{
+			var today = DateTime.Today; // Current date (e.g., 2025-10-26)
+
+			// Calculate the start of the week (Monday)
+			var startOfWeek = today.AddDays(-(int)today.DayOfWeek + (int)DayOfWeek.Monday);
+			if (today.DayOfWeek == DayOfWeek.Sunday)
+			{
+				startOfWeek = startOfWeek.AddDays(-7); // If today is Sunday, use previous Monday
+			}
+
+			// Get medicines from Monday to today (inclusive)
+			var medicines = _medicineMenager.TGetList()
+				.Where(m => m.CreateDate.Date >= startOfWeek && m.CreateDate.Date <= today)
+				.OrderBy(m => m.CreateDate)
+				.ToList();
+
+			// Map to DTO and apply pagination
+			var modelList = _mapper.Map<List<ResultMedicineDTO>>(medicines).ToPagedList(page, 10);
+
+			ViewBag.StartOfWeek = startOfWeek.ToString("dd/MM/yyyy");
+			ViewBag.EndOfWeek = today.ToString("dd/MM/yyyy");
+			return View(modelList);
+		}
+
+		public IActionResult AylikRapor(int page = 1)
+		{
+			var today = DateTime.Today; // Current date (e.g., 2025-10-26)
+
+			// Calculate the start of the month
+			var startOfMonth = new DateTime(today.Year, today.Month, 1);
+
+			// Get medicines from the start of the month to today (inclusive)
+			var medicines = _medicineMenager.TGetList()
+				.Where(m => m.CreateDate.Date >= startOfMonth && m.CreateDate.Date <= today)
+				.OrderBy(m => m.CreateDate)
+				.ToList();
+
+			// Map to DTO and apply pagination
+			var modelList = _mapper.Map<List<ResultMedicineDTO>>(medicines).ToPagedList(page, 10);
+
+			ViewBag.StartOfMonth = startOfMonth.ToString("dd/MM/yyyy");
+			ViewBag.EndOfMonth = today.ToString("dd/MM/yyyy");
+			return View(modelList);
 		}
 	}
 }

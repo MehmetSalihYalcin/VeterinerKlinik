@@ -16,7 +16,7 @@ builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
 	.AddCookie(options =>
 	{
-		options.LoginPath = "/AdminPanel/AdminGirisPaneli/Index";
+		options.LoginPath = "/AnaSayfa/Login";
 		options.LogoutPath = "/AnaSayfa/Index";
 		options.Cookie.HttpOnly = true;
 		options.ExpireTimeSpan = TimeSpan.FromDays(30);

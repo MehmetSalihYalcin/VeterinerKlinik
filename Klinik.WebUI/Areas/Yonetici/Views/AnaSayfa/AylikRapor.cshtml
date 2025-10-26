@@ -1,0 +1,96 @@
+﻿@using PagedList
+@model PagedList<Klinik.DTO.MedicineDTOS.ResultMedicineDTO>
+@{
+    ViewData["Title"] = "Aylik Rapor";
+    Layout = "~/Areas/Yonetici/Views/Shared/_AdminLayout.cshtml";
+} 
+
+<!-- row -->
+<div class="row">
+    <div class="col">
+        <p class="text-white mt-5 mb-5">Hoşgeldin, <b>Levent</b></p>
+    </div>
+</div>
+<div class="row tm-content-row">
+    <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
+    </div>
+    <div class="col-12 tm-block-col">
+        <div class="tm-bg-primary-dark tm-block tm-block-taller tm-block-scroll" style="max-height:100%">
+            <div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <h2 class="tm-block-title">Aylık İlaç Rapor istesi</h2>
+                    </div>
+                    <div class="col-lg-6">
+                        <h2 class="tm-block-title">@ViewBag.StartOfMonth - @ViewBag.EndOfMonth</h2>
+                    </div>
+                </div>
+            </div>
+
+            @if (Model.Any())
+            {
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col" style="width:20%">Seri Numarası</th>
+                            <th scope="col" style="width:30%">İlaç Adı</th>
+                            <th scope="col" style="width:10%">Fiyat(TL)</th>
+                            <th scope="col" style="width:10%">Alınan Adet</th>
+                            <th scope="col" style="width:10%">Satılan Adet</th>
+                            <th scope="col" style="width:10%">Kalan Adet</th>
+                            <th scope="col" style="width:10%">Tarih</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @item.SerialNumber
+                                </td>
+                                <td><b>@item.MedicineName</b></td>
+                                <td><b>@item.MedicinePrice ₺</b></td>
+                                <td>@item.MedicineRealStok</td>
+                                <td>@item.MedicinePiece</td>
+                                <td>@(item.MedicineRealStok - @item.MedicinePiece)</td>
+                                <td>@item.CreateDate.ToShortDateString()</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <p>Bu hafta eklenen ilaç bulunmamaktadır.</p>
+            }
+
+            <nav aria-label="Page navigation">
+                <ul class="pagination mt-4" style="overflow: overlay;">
+                    @if (Model.HasPreviousPage)
+                    {
+                        <li class="page-item">
+                            <a class="page-link" href="/Yonetici/AnaSayfa/Index?page=@(Model.PageNumber - 1)">Geri</a>
+                        </li>
+                    }
+
+                    @for (int i = 1; i <= Model.PageCount; i++)
+                    {
+                        <li class="page-item @(Model.PageNumber == i ? "active" : "")">
+                            <a class="page-link" href="/Yonetici/AnaSayfa/Index?page=@i">@i</a>
+                        </li>
+                    }
+
+                    @if (Model.HasNextPage)
+                    {
+                        <li class="page-item">
+                            <a class="page-link" href="/Yonetici/AnaSayfa/Index?page=@(Model.PageNumber + 1)">İleri</a>
+                        </li>
+                    }
+
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
