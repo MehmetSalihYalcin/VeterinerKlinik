@@ -40,11 +40,11 @@
                     <tr> 
                         <th scope="col" style="width:15%">Seri Numarası</th>
                         <th scope="col" style="width:10%">İlaç Adı</th>
-                        <th scope="col" style="width:45%">İlaç Açıklaması</th>
+                        <th scope="col" style="width:40%">İlaç Açıklaması</th>
                         <th scope="col" style="width:5%">Fiyat(TL)</th>
                         <th scope="col" style="width:5%">Adet</th>
-                        <th scope="col" style="width:10%">Tarih</th>
-                        <th scope="col" style="width:5%">Düzenle</th>
+                        <th scope="col" style="width:10%">SK Tarihi</th>
+                        <th scope="col" style="width:10%">Düzenle</th>
                         <th scope="col" style="width:5%">sil</th>
                     </tr>
                 </thead>
@@ -56,7 +56,7 @@
                                 @item.SerialNumber
                             </td>
                             <td><b>@item.MedicineName</b></td>
-                            <td><b>@(item.MedicineDescription.Length <= 80 ? item.MedicineDescription : item.MedicineDescription.Substring(0, 80)+"...")</b></td>
+                            <td><b>@(item.MedicineDescription.Length <= 50 ? item.MedicineDescription : item.MedicineDescription.Substring(0, 50)+"...")</b></td>
                             <td><b>@item.MedicinePrice ₺</b></td>
                             <td>@item.MedicinePiece</td>
                             <td>@item.CreateDate.ToShortDateString()</td>

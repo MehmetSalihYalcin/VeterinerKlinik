@@ -1,7 +1,7 @@
 ﻿@using PagedList
 @model  PagedList<Klinik.DTO.MedicineDTOS.ResultMedicineDTO>
 @{
-    ViewData["Title"] = "Haftalik Rapor";
+    ViewData["Title"] = "Haftalik SKT Kontrol";
     Layout = "~/Areas/Yonetici/Views/Shared/_AdminLayout.cshtml";
 }
   
@@ -20,7 +20,7 @@
             <div>
                 <div class="row">
                     <div class="col-lg-6">
-                        <h2 class="tm-block-title">Haftalık İlaç Rapor istesi</h2>
+                        <h2 class="tm-block-title">Haftalık SKT Kontrol istesi</h2>
                     </div>
                     <div class="col-lg-6">
                         <h2 class="tm-block-title">@ViewBag.StartOfWeek - @ViewBag.EndOfWeek</h2> 
@@ -40,7 +40,7 @@
                             <th scope="col" style="width:10%">Alınan Adet</th>
                             <th scope="col" style="width:10%">Satılan Adet</th>
                             <th scope="col" style="width:10%">Kalan Adet</th>
-                            <th scope="col" style="width:10%">Tarih</th> 
+                            <th scope="col" style="width:10%">Son Kullanma Tarihi</th> 
                         </tr>
                     </thead>
                     <tbody>
@@ -53,8 +53,8 @@
                                 <td><b>@item.MedicineName</b></td>
                                 <td><b>@item.MedicinePrice ₺</b></td>
                                 <td>@item.MedicineRealStok</td>
-                                <td>@item.MedicinePiece</td> 
                                 <td>@(item.MedicineRealStok - @item.MedicinePiece)</td>
+                                <td>@item.MedicinePiece</td>
                                 <td>@item.CreateDate.ToShortDateString()</td> 
                             </tr>
                         }
@@ -71,21 +71,21 @@
                     @if (Model.HasPreviousPage)
                     {
                         <li class="page-item">
-                            <a class="page-link" href="/Yonetici/AnaSayfa/Index?page=@(Model.PageNumber - 1)">Geri</a>
+                            <a class="page-link" href="/Yonetici/AnaSayfa/HaftalikRapor?page=@(Model.PageNumber - 1)">Geri</a>
                         </li>
                     }
 
                     @for (int i = 1; i <= Model.PageCount; i++)
                     {
                         <li class="page-item @(Model.PageNumber == i ? "active" : "")">
-                            <a class="page-link" href="/Yonetici/AnaSayfa/Index?page=@i">@i</a>
+                            <a class="page-link" href="/Yonetici/AnaSayfa/HaftalikRapor?page=@i">@i</a>
                         </li>
                     }
 
                     @if (Model.HasNextPage)
                     {
                         <li class="page-item">
-                            <a class="page-link" href="/Yonetici/AnaSayfa/Index?page=@(Model.PageNumber + 1)">İleri</a>
+                            <a class="page-link" href="/Yonetici/AnaSayfa/HaftalikRapor?page=@(Model.PageNumber + 1)">İleri</a>
                         </li>
                     }
 

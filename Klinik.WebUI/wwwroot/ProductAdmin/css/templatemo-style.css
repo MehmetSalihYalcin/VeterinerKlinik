@@ -403,11 +403,11 @@ thead {
 .page-item:last-child {
   margin-right: 0;
 }
-.page-item.active .page-link {
-  background-color: lime;
-  border-color: #dee2e6;
-  color: #000;
-}
+    .page-item.active .page-link {
+        background-color: #f5a623;
+        border-color: #dee2e6;
+        color: #000;
+    }
 input[type="checkbox"] {
   cursor: pointer;
   -webkit-appearance: none;

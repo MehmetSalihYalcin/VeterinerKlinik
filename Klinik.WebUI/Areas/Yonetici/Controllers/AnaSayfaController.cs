@@ -45,8 +45,7 @@ namespace Klinik.WebUI.Areas.Yonetici.Controllers
 		[HttpPost]
 		public IActionResult IlacEkle(CreateMedicineDTO create)
 		{
-			var value = _mapper.Map<Medicine>(create);
-			value.MedicineRealStok = create.MedicinePiece;
+			var value = _mapper.Map<Medicine>(create); 
 			_medicineMenager.TCreate(value);
 			return Redirect("/Yonetici/AnaSayfa/Index");
 		}
@@ -78,26 +77,21 @@ namespace Klinik.WebUI.Areas.Yonetici.Controllers
 
 		public IActionResult HaftalikRapor(int page = 1)
 		{
-			var today = DateTime.Today; // Current date (e.g., 2025-10-26)
+			var today = DateTime.Today; // Bugünün tarihi (örneğin, 2025-10-27)
+			var endOfNextWeek = today.AddDays(7); // Gelecek haftanın aynı günü (örneğin, 2025-11-03)
 
-			// Calculate the start of the week (Monday)
-			var startOfWeek = today.AddDays(-(int)today.DayOfWeek + (int)DayOfWeek.Monday);
-			if (today.DayOfWeek == DayOfWeek.Sunday)
-			{
-				startOfWeek = startOfWeek.AddDays(-7); // If today is Sunday, use previous Monday
-			}
-
-			// Get medicines from Monday to today (inclusive)
+			// Son kullanma tarihi bugünden gelecek haftanın bugüne kadar olan ilaçları getir
 			var medicines = _medicineMenager.TGetList()
-				.Where(m => m.CreateDate.Date >= startOfWeek && m.CreateDate.Date <= today)
+				.Where(m => m.CreateDate.Date >= today && m.CreateDate.Date <= endOfNextWeek)
 				.OrderBy(m => m.CreateDate)
 				.ToList();
 
-			// Map to DTO and apply pagination
+			// DTO'ya dönüştür ve sayfalandırma uygula
 			var modelList = _mapper.Map<List<ResultMedicineDTO>>(medicines).ToPagedList(page, 10);
 
-			ViewBag.StartOfWeek = startOfWeek.ToString("dd/MM/yyyy");
-			ViewBag.EndOfWeek = today.ToString("dd/MM/yyyy");
+			// ViewBag ile tarih aralığını gönder
+			ViewBag.StartOfWeek = today.ToString("dd/MM/yyyy");
+			ViewBag.EndOfWeek = endOfNextWeek.ToString("dd/MM/yyyy");
 			return View(modelList);
 		}
 
